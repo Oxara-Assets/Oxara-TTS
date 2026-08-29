@@ -46,7 +46,7 @@ else:
 handler.setFormatter(logging.Formatter('%(name)s: %(message)s'))
 level = logging.DEBUG if constants.ENVIRONMENT != "PRODUCTION" else logging.INFO
 
-logger = logging.getLogger('Blackstar Engine')
+logger = logging.getLogger('Oxara TTS')
 logger.setLevel(level)
 logger.addHandler(handler)
 logger.propagate = False
