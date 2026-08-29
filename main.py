@@ -12,7 +12,7 @@ constants = BlackstarConstants()
 if constants.ENVIRONMENT == "PRODUCTION":
     presence = "t!join"
 else:
-    presence = "Testing TTS Bot"
+    presence = "Under Development"
 
 
 class Bot(commands.Bot):
@@ -32,8 +32,8 @@ class Bot(commands.Bot):
     async def is_owner(self, user: discord.User) -> bool:
         bypassed_users = [
             758170288566566952, #Ghost
-            1371489554279825439, #Wolf
-            1007353417779396709 #Option
+            1007353417779396709, #Option
+            495620492862947349 #Bread
         ]
 
         return user.id in bypassed_users
@@ -63,7 +63,6 @@ class Bot(commands.Bot):
         discord_http_logger.error('Disconnected from discord gateway')
 
     async def on_shard_connect(self, shard_id: int):
-        await self.tree.sync()
         discord_http_logger.info(f'Shard {shard_id} has connected to discord gateway')
     
     async def on_shard_disconnected(self, shard_id: int):
@@ -76,18 +75,6 @@ class Bot(commands.Bot):
         bot.tts_tasks = {}
 
         await bot.change_presence(activity=discord.CustomActivity(name=presence))
-
-        for guild in bot.guilds:
-            if guild.id not in whitelisted_guilds:
-                logger.error(f"Server not found: {guild.name}({guild.id})")
-                try:
-                    await guild.leave()
-                except Exception:
-                    await guild.owner.send(f"Please remove me from **{guild.name}**, I will not work!")
-                
-            else:
-                logger.info(f'Chunked: {guild.id}')
-                await guild.chunk()
         
         logger.info(f'{self.user} is ready.')
 
